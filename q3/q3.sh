@@ -1,6 +1,39 @@
 #!/bin/bash
 
-arq=none
+function r {
+	read -p 'Digite o nome do arquivo: ' arq
+	cat $arq &> /dev/null
+	if [ $? != 0 ]; then
+		echo -e "\nArquivo digitado não existe!\n"
+	fi
+}
+
+function a {
+	if [ -z $arq ]; then
+		echo -e "\nInforme o arquivo na opção "r"\n"
+	else
+		cat $arq | sed -E 's/[a-zA-Z]//g'
+	fi
+
+}
+function b {
+	if [ -z $arq ]; then
+		echo -e "\nInforme o arquivo na opção "r"\n"
+	else
+		cat $arq | sed -E 's/[0-9]//g'
+	fi
+
+}
+function c {
+	if [ -z $arq ]; then
+		echo -e "\nInforme o arquivo na opção "r"\n"
+	else
+		cat $arq | sed -E 's/\W|_/~/g'
+	fi
+
+}
+
+
 while true; do
 
 	echo -e "r - Digite o nome de um arquivo que será processado."
@@ -12,10 +45,10 @@ while true; do
 	read -p 'Digite uma opção: ' opc
 
 	case $opc in
-		"r") read -p 'Digite o nome do arquivo: ' arq ;;
-		"a") cat $arq | sed -E 's/[a-zA-Z]//g' &> /dev/null && echo -e "oi" || echo -e "Digite a opção r";;
-		"b") cat $arq | sed -E 's/[0-9]//g';;
-		"c") cat $arq | sed -E 's/\W|_/~/g';;
+		"r") r;;
+		"a") a;;
+		"b") b;;
+		"c") c;;
 		"q") break ;;
 		*) echo -e "\nOps Sr(a) usuário, digite um valor válido!\n" ;;
 	esac
